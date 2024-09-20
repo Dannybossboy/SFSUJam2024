@@ -6,6 +6,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
 
+    public Transform groundCheck;
+    public LayerMask groundMask;
+
+    private bool isGrounded;
     private Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
@@ -16,8 +20,15 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, .1f, groundMask);
+
         float horizontal = Input.GetAxisRaw("Horizontal");
 
-        rb.velocity = new Vector2(horizontal, rb.velocity.y);
+        if(isGrounded) 
+        {
+
+        }
+
+        rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
     }
 }
