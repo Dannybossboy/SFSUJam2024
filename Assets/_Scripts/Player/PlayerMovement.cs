@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public float jumpForce = 12f;
 
     public Transform groundCheck;
     public LayerMask groundMask;
@@ -24,11 +25,13 @@ public class PlayerMovement : MonoBehaviour
 
         float horizontal = Input.GetAxisRaw("Horizontal");
 
-        if(isGrounded) 
+        //Jump
+        if(Input.GetButtonDown("Jump") && isGrounded)
         {
-
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
 
+        //Move
         rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
     }
 }

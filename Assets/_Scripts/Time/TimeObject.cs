@@ -1,53 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TimeObject : MonoBehaviour
 {
     public List<TimeSlice> timeline = new List<TimeSlice>();
 
-
-    private bool isRewinding;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
+    private TimeManager timeManager;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        timeManager = TimeManager.instance;
+
+        Init();
     }
 
-    private void Update()
+    public virtual void FixedUpdate()
     {
-        if(Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            isRewinding = !isRewinding;
-        }
-    }
+        if (timeManager == null) return;
 
-    private void FixedUpdate()
-    {
-        if(isRewinding)
+        if(timeManager.isRewinding)
         {
-            Rewind();
+            RewindBehavior();
         } else
         {
-            Record();
+            NormalBehavior();
         }
 
     }
 
-    private void Rewind()
+    public virtual void Init() { }
+
+    //Rewind time for object
+    public virtual void RewindBehavior()
     {
         if (timeline.Count > 0)
         {
+            rb.bodyType = RigidbodyType2D.Kinematic;
+
             transform.position = timeline[0].position;
             transform.rotation = timeline[0].rotation;
             timeline.RemoveAt(0);
+        } else
+        {
+            timeManager.endTimeline();
         }
 
     }
 
-    private void Record()
+    //Record time for object
+    public virtual void NormalBehavior()
     {
+        rb.bodyType = RigidbodyType2D.Dynamic;
         timeline.Insert(0, new TimeSlice(transform.position, transform.rotation));
     }
 }
