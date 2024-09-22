@@ -4,13 +4,27 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Movement")]
     public float moveSpeed = 5f;
-    public float jumpForce = 12f;
 
+    [Header("Jump")]
+    public float jumpForce = 12f;
+    private bool isJumping;
+    private bool isJumpCut;
+
+    [Header("GroundCheck")]
     public Transform groundCheck;
     public LayerMask groundMask;
 
     private bool isGrounded;
+
+    [Header("Timers")]
+    private float lastOnGroundTime;
+
+    [Header("Assists")]
+    [Range(0.01f, 0.5f)] public float coyoteTime;
+    [Range(0.01f, 0.5f)] public float jumpInputBufferTime;
+
     private Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
@@ -24,6 +38,9 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, .1f, groundMask);
 
         float horizontal = Input.GetAxisRaw("Horizontal");
+
+        lastOnGroundTime -= Time.deltaTime;
+
 
         //Jump
         if(Input.GetButtonDown("Jump") && isGrounded)
