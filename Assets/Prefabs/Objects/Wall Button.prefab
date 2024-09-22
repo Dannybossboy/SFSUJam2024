@@ -476,6 +476,7 @@ GameObject:
   - component: {fileID: 4481976201470441820}
   - component: {fileID: 1137487855658342497}
   - component: {fileID: 3688061710237012789}
+  - component: {fileID: 8757179860684368145}
   m_Layer: 8
   m_Name: Press
   m_TagString: Untagged
@@ -649,3 +650,18 @@ SpringJoint2D:
   m_Distance: 0.5364501
   m_DampingRatio: 0
   m_Frequency: 1
+--- !u!114 &8757179860684368145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6977231704538221017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4eb6b745cfabbc4da44a092bec376ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressEvent:
+    m_PersistentCalls:
+      m_Calls: []
