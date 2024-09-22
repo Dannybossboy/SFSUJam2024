@@ -6,13 +6,12 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed = 5f;
-    public float accelAmount;
-    public float deccelAmount;
+    public float airGravity;
+    private float defaultGravity;
 
     [Header("Jump")]
     public float jumpForce = 12f;
-    public float accelInAir;
-    public float deccelInAir;
+    public float jumpCutMultiplier;
     private bool isJumping;
     private bool isJumpCut;
 
@@ -39,33 +38,52 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        defaultGravity = rb.gravityScale;
     }
 
     // Update is called once per frame
     void Update()
     {
         //Input
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, .1f, groundMask);
+        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(.45f, .1f), 0f, groundMask);
 
         input.x = Input.GetAxisRaw("Horizontal");
 
-        //Timers
-        lastOnGroundTime -= Time.deltaTime;
+        //Grounded Behavior
+        if (isGrounded)
+        {
+            lastOnGroundTime = coyoteTime;
+            rb.gravityScale = defaultGravity;
+        }
+        else
+        {
+            lastOnGroundTime -= Time.deltaTime;
+            rb.gravityScale = airGravity;
+        }
 
         //Flip Player Direction
-        if(rb.velocity.x > 0)
+        if(rb.velocity.x > .1f)
         {
             flipPlayer(true);
-        } else if(rb.velocity.x < 0)
+        } else if(rb.velocity.x < -.1f)
         {
             flipPlayer(false);
         }
 
 
         //Jump
-        if(Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && lastOnGroundTime > 0)
         {
             Jump();
+
+            isJumping = true;
+            lastOnGroundTime = 0;
+        }
+        if (Input.GetButtonUp("Jump") && isJumping && rb.velocity.y > 0)
+        {
+            rb.AddForce(Vector2.down * rb.velocity.y * (1 - jumpCutMultiplier), ForceMode2D.Impulse);
+            isJumping = false;
+            animator.ResetTrigger("Jump");
         }
 
         //Animation
@@ -74,16 +92,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        run(1);
+        rb.velocity = new Vector2(input.x * moveSpeed, rb.velocity.y);
 
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
     }
 
     private void Jump()
     {
-        lastOnGroundTime = 0;
-        rb.velocity = new Vector2(rb.velocity.x, 0);
-        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
         animator.SetTrigger("Jump");
     }
@@ -97,31 +113,5 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
-    }
-
-    private void run(float lerpAmount)
-    {
-        float targetSpeed = input.x * moveSpeed;
-        targetSpeed = Mathf.Lerp(rb.velocity.x, targetSpeed, lerpAmount);
-
-        float accelRate;
-
-        //Changes acceleration if in air
-        if(lastOnGroundTime > 0)
-        {
-            accelRate = (Mathf.Abs(targetSpeed) > 0.001f) ? accelAmount : deccelAmount;
-        } else
-        {
-            accelRate = (Mathf.Abs(targetSpeed) > 0.001f) ? accelAmount * accelInAir : deccelAmount * deccelInAir;
-        }
-
-
-        float speedDif = targetSpeed - rb.velocity.x;
-
-        float movement = speedDif * accelRate;
-
-
-        rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
-
     }
 }
