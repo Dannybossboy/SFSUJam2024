@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
 
 
     public TMP_Text rewindText;
+    public TMP_Text timeText;
 
     private void Awake()
     {
@@ -31,5 +32,12 @@ public class UIManager : MonoBehaviour
             rewindText.text = ">>";
         }
 
+    }
+
+    public void SetTime(float time)
+    {
+        int minutes = Mathf.FloorToInt(time / 60);
+        int seconds = Mathf.FloorToInt(time % 60);
+        timeText.text = string.Format("{0:00}: {1:00}", minutes, seconds);
     }
 }

@@ -7,12 +7,17 @@ public class TimeObject : MonoBehaviour
 {
     public List<TimeSlice> timeline = new List<TimeSlice>();
 
+    [HideInInspector]
     public Rigidbody2D rb;
+
     private TimeManager timeManager;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        if(TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
+        {
+            this.rb = rb;
+        }
 
         timeManager = TimeManager.instance;
 

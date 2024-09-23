@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //Input
-        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(.45f, .1f), 0f, groundMask);
+        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(.35f, .1f), 0f, groundMask);
 
         input.x = Input.GetAxisRaw("Horizontal");
 

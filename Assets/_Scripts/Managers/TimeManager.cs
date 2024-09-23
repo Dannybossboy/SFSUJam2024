@@ -16,7 +16,7 @@ public class TimeManager : MonoBehaviour
     private void Update()
     {
         //Toggles reverse time / normal time
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetButtonDown("ReverseTime"))
         {
             isRewinding = !isRewinding;
             UIManager.Instance.toggleRewindUI(isRewinding);

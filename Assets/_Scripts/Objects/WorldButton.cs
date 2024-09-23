@@ -5,22 +5,43 @@ using UnityEngine.Events;
 
 public class WorldButton : MonoBehaviour
 {
-    public UnityEvent pressEvent; 
+    public UnityEvent pressEvent;
+    public UnityEvent releaseEvent;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public Transform button;
+
+    private void OnTriggerEnter2D(Collider2D coll)
     {
-        if(collision.collider.tag == "Player" || collision.collider.tag == "Obstacle")
+        if(coll.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb) || coll.gameObject.tag == "Obstacle")
         {
-            print("It's a hit!");
-        }   
+            pressEvent?.Invoke();
+            moveButton(true);
+        }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D coll)
     {
-        if (collision.collider.name == "Player" || collision.collider.tag == "Obstacle")
+        if (coll.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb) || coll.gameObject.tag == "Obstacle")
         {
-            print("Goodbye!");
+            releaseEvent?.Invoke();
+            moveButton(false);
         }
+    }
+
+    public void moveButton(bool pressed)
+    {
+        if(pressed)
+        {
+            button.transform.position -= transform.rotation * new Vector3(0,.5f, 0);
+        } else
+        {
+            button.transform.position += transform.rotation * new Vector3(0, .5f, 0);
+        }
+    }
+
+    private void Update()
+    {
+        
     }
 
 }

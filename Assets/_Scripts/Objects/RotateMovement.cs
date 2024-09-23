@@ -8,6 +8,8 @@ public class RotateMovement : TimeObject
 
     public float rotationSpeed;
     public float acceleration;
+
+    public Transform toRotate;
     public enum rotationtype
     {
         Clockwise,
@@ -17,7 +19,7 @@ public class RotateMovement : TimeObject
     //Start
     public override void Init()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = toRotate.GetComponent<Rigidbody2D>();
         rb.centerOfMass = Vector2.zero;
     }
 
