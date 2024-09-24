@@ -7,10 +7,15 @@ public class TimeManager : MonoBehaviour
     public static TimeManager instance;
 
     public bool isRewinding;
+    private Gamemanager gamemanager;
 
     private void Awake()
     {
         instance = this;
+    }
+    private void Start()
+    {
+        gamemanager = Gamemanager.instance;
     }
 
     private void Update()
