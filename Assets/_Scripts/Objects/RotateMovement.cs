@@ -16,6 +16,23 @@ public class RotateMovement : TimeObject
         CounterClockwise
     }
 
+    public AudioSource audioSource;
+    private bool playing;
+
+
+    private void Update()
+    {
+        if(!playing && Mathf.Abs(rb.angularVelocity) > 1)
+        {
+            audioSource.Play();
+            playing = true;
+        } else
+        {
+            audioSource.Stop();
+            playing = false;
+        }
+    }
+
     //Start
     public override void Init()
     {

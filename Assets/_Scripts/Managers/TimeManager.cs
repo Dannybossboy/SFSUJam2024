@@ -23,10 +23,7 @@ public class TimeManager : MonoBehaviour
     private void Start()
     {
         gamemanager = Gamemanager.instance;
-    }
 
-    private void Start()
-    {
         musicSource.clip = normalMusic;
         musicSource.Play();
     }
