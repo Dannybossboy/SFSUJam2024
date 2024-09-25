@@ -50,9 +50,6 @@ public class TimeObject : MonoBehaviour
             transform.position = timeline[0].position;
             transform.rotation = timeline[0].rotation;
             timeline.RemoveAt(0);
-        } else
-        {
-            timeManager.endTimeline();
         }
 
     }

@@ -8,9 +8,22 @@ public class TimeManager : MonoBehaviour
 
     public bool isRewinding;
 
+    //Audio
+    public AudioSource musicSource;
+    public AudioClip normalMusic;
+    public AudioClip reverseMusic;
+
+    private float currentTime;
+
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Start()
+    {
+        musicSource.clip = normalMusic;
+        musicSource.Play();
     }
 
     private void Update()
@@ -20,6 +33,20 @@ public class TimeManager : MonoBehaviour
         {
             isRewinding = !isRewinding;
             UIManager.Instance.toggleRewindUI(isRewinding);
+        }
+
+        currentTime = musicSource.time;
+
+        if (isRewinding)
+        {
+            musicSource.clip = reverseMusic;
+            musicSource.Play();
+            musicSource.time = currentTime;
+        } else
+        {
+            musicSource.clip = normalMusic;
+            musicSource.Play();
+            musicSource.time = currentTime;
         }
     }
 

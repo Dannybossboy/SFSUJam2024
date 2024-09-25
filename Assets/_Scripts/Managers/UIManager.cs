@@ -7,7 +7,6 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-
     public TMP_Text rewindText;
     public TMP_Text timeText;
 

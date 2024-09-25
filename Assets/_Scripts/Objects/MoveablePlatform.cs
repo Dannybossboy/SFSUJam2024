@@ -1,19 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MoveablePlatform : MonoBehaviour
 {
+    public Transform toMove;
     public float lerpSpeed = 10f;
 
     public Vector3 end;
     private Vector3 start;
 
+    public UnityEvent active;
+    public UnityEvent notActive;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        start = transform.position;
+        start = toMove.position;
     }
 
 
@@ -22,9 +27,11 @@ public class MoveablePlatform : MonoBehaviour
         if(active)
         {
             StartCoroutine(Move(start, end, .5f));
+            this.active.Invoke();
         } else
         {
             StartCoroutine(Move(end, start, .5f));
+            this.notActive.Invoke();
         }
     }
 
@@ -34,11 +41,11 @@ public class MoveablePlatform : MonoBehaviour
 
         while(time < duration)
         {
-            transform.position = Vector3.Lerp(start, end, time / duration);
+            toMove.position = Vector3.Lerp(start, end, time / duration);
             time += Time.deltaTime;
             yield return null;
         }
 
-        transform.position = end;
+        toMove.position = end;
     }
 }
