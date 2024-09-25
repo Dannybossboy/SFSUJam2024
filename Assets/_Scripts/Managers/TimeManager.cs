@@ -7,6 +7,7 @@ public class TimeManager : MonoBehaviour
     public static TimeManager instance;
 
     public bool isRewinding;
+    private Gamemanager gamemanager;
 
     //Audio
     public AudioSource musicSource;
@@ -18,6 +19,10 @@ public class TimeManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+    private void Start()
+    {
+        gamemanager = Gamemanager.instance;
     }
 
     private void Start()
