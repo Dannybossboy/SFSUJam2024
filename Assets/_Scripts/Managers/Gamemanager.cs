@@ -51,7 +51,7 @@ public class Gamemanager : MonoBehaviour
         // Stops reversing time once player reaches the starting time
         if (time > checkpointTime)
         {
-            timeManager.isRewinding = false;
+            //timeManager.isRewinding = false;
         }
 
     }

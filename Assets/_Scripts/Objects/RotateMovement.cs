@@ -26,7 +26,7 @@ public class RotateMovement : TimeObject
         {
             audioSource.Play();
             playing = true;
-        } else
+        } else if(playing && Mathf.Abs(rb.angularVelocity) < 1)
         {
             audioSource.Stop();
             playing = false;

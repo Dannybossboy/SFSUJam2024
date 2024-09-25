@@ -39,23 +39,16 @@ public class TimeManager : MonoBehaviour
 
         currentTime = musicSource.time;
 
-        if (isRewinding)
+        if (isRewinding && musicSource.clip != reverseMusic)
         {
             musicSource.clip = reverseMusic;
             musicSource.Play();
             musicSource.time = currentTime;
-        } else
+        } else if(!isRewinding && musicSource.clip != normalMusic)
         {
             musicSource.clip = normalMusic;
             musicSource.Play();
             musicSource.time = currentTime;
         }
-    }
-
-    //Called when objects reach their timeline beggining
-    public void endTimeline()
-    {
-        isRewinding = false;
-        UIManager.Instance.toggleRewindUI(isRewinding);
     }
 }

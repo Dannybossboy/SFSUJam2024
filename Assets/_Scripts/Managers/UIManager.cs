@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
     public TMP_Text rewindText;
     public TMP_Text timeText;
 
+    public Animator stopWatch;
+
     private void Awake()
     {
         Instance = this;
@@ -23,6 +25,7 @@ public class UIManager : MonoBehaviour
 
     public void toggleRewindUI(bool rewinding)
     {
+        /*
         if(rewinding)
         {
             rewindText.text = "<<";
@@ -30,13 +33,17 @@ public class UIManager : MonoBehaviour
         {
             rewindText.text = ">>";
         }
+        */
 
+        stopWatch.SetTrigger("Click");
     }
 
     public void SetTime(float time)
     {
+        /*
         int minutes = Mathf.FloorToInt(time / 60);
         int seconds = Mathf.FloorToInt(time % 60);
         timeText.text = string.Format("{0:00}: {1:00}", minutes, seconds);
+        */
     }
 }
