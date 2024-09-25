@@ -10,6 +10,9 @@ public class PistonMovement : TimeObject
 
     public float extentSpeed = 5;
 
+
+    public Transform target;
+
     public Transform toMove;
 
     private bool reversing;
@@ -26,71 +29,51 @@ public class PistonMovement : TimeObject
 
     public override void NormalBehavior()
     {
-        float dist = (toMove.position - transform.position).magnitude;
+        //Max distance of extent
+        float dist = !reversing ? (toMove.position - transform.position).magnitude : (target.position - toMove.position).magnitude; 
+        //Direction of velocity
+        float dir = reversing ? -1 : 1;
 
-        if(!reversing)
+        //Move shaft
+        if (dist < extentDistance) 
         {
-            if (dist < extentDistance)
-            {
-                rb.velocity = transform.right * extentSpeed;
-            }
-            else if (dist >= extentDistance)
-            {
-                reversing = true;
-                rb.velocity = Vector2.zero;
-            }
+            rb.MovePosition(rb.position + (Vector2)transform.right * extentDistance * dir * Time.fixedDeltaTime);
+        }
+        //Stop shaft and switch direction
+        else if (dist >= extentDistance) 
+        {
+            rb.position = reversing ? transform.position : target.position;
+
+            reversing = !reversing;
         }
 
-
-        if(reversing)
-        {
-            if(dist > .5f)
-            {
-                rb.velocity = -transform.right * extentSpeed;
-            } else if(dist <= .5f)
-            {
-                reversing = false;
-                rb.velocity = Vector2.zero;
-            }
-
-
-        }
-        rb.position = new Vector2(rb.position.x, offset);
-
+        //Lock to axis Broken Help pls
+        /*
+        Vector2 localPos = transform.InverseTransformVector(rb.position);
+        Quaternion unRot = Quaternion.Inverse(transform.rotation);
+        Vector2 unRotVector = unRot * localPos;
+        rb.position = transform.TransformVector(transform.rotation * new Vector2(unRotVector.x, 0));
+        */
     }
 
     public override void RewindBehavior()
     {
-        float dist = (toMove.position - transform.position).magnitude;
+        //Max distance of extent
+        float dist = !reversing ? (target.position - toMove.position).magnitude : (toMove.position - transform.position).magnitude;
+        //Direction of velocity
+        float dir = reversing ? 1 : -1;
 
-        if (reversing)
+        //Move shaft
+        if (dist < extentDistance)
         {
-            if (dist < extentDistance)
-            {
-                rb.velocity = transform.right * extentSpeed;
-            }
-            else if (dist >= extentDistance)
-            {
-                reversing = false;
-                rb.velocity = Vector2.zero;
-            }
+            rb.MovePosition(rb.position + (Vector2)transform.right * extentDistance * dir * Time.fixedDeltaTime);
         }
-
-
-        if (!reversing)
+        //Stop shaft and switch direction
+        else if (dist >= extentDistance)
         {
-            if (dist > .5f)
-            {
-                rb.velocity = -transform.right * extentSpeed;
-            }
-            else if (dist <= .5f)
-            {
-                reversing = true;
-                rb.velocity = Vector2.zero;
-            }
+            rb.position = reversing ? target.position : transform.position;
 
-
+            reversing = !reversing;
         }
-        rb.position = new Vector2(rb.position.x, offset);
     }
 }
