@@ -35,6 +35,14 @@ public class PistonMovement : TimeObject
 
         offset = rb.position.y;
 
+        switch(type)
+        {
+            case pistonType.oneshot:
+                break;
+            case pistonType.pingpong:
+                break;
+        }
+
         toMove.position = Vector3.Lerp(transform.position, transform.position + new Vector3(extentDistance, 0, 0), startOffset);
 
     }
@@ -58,9 +66,11 @@ public class PistonMovement : TimeObject
             case pistonType.oneshot:
                 if ((toMove.position - transform.position).magnitude < extentDistance)
                 {
+                    rb.bodyType = RigidbodyType2D.Dynamic;
                     rb.MovePosition(rb.position + (Vector2)transform.right * extentDistance * Time.fixedDeltaTime);
                 } else if((toMove.position - transform.position).magnitude >= extentDistance)
                 {
+                    rb.bodyType = RigidbodyType2D.Kinematic;
                     toMove.position = target.position;
                 }
                 break;

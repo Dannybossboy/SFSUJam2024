@@ -49,11 +49,10 @@ public class Gamemanager : MonoBehaviour
 
         }
         // Game Over State
-        else if (time < 0)
+        else if (time <= 0)
         {
             time = 0;
             StartCoroutine(death());
-
         }
 
         // Adjust clock to the current time
@@ -63,6 +62,11 @@ public class Gamemanager : MonoBehaviour
         if (time >= checkpointTime)
         {
             timeManager.isRewinding = false;
+        }
+
+        if(Input.GetButtonDown("Restart"))
+        {
+            StartCoroutine(death());
         }
 
     }
