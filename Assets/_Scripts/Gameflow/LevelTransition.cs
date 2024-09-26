@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelTransition : MonoBehaviour
 {
     public Transform levelCamPos;
     private Camera cam;
+    private Gamemanager gamemanager;
     // Start is called before the first frame update
     void Start()
     {
         cam = Camera.main;
+        gamemanager = Gamemanager.instance;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -18,6 +21,7 @@ public class LevelTransition : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             StartCoroutine(Move(cam.transform.position, levelCamPos.position, 1f));
+            loadNextLevel();
         }
     }
 
@@ -33,5 +37,18 @@ public class LevelTransition : MonoBehaviour
         }
 
         cam.transform.position = end;
+    }
+
+    private void loadNextLevel()
+    {
+        switch(SceneManager.GetActiveScene().name)
+        {
+            case "Level1":
+                SceneManager.LoadScene("Level2");
+                break;
+            case "Level2":
+                SceneManager.LoadScene("Level1");
+                break;
+        }
     }
 }
