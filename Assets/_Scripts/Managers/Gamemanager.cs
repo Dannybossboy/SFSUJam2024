@@ -77,7 +77,6 @@ public class Gamemanager : MonoBehaviour
         
         uiManager.setExplosion();
         yield return new WaitForSeconds(1);
-        uiManager.setNonExplosion();
         time = checkpointTime;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

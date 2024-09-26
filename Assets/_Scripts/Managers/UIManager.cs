@@ -57,11 +57,6 @@ public class UIManager : MonoBehaviour
 
     public void setExplosion()
     {
-        explosion.SetBool("Dead",true);
-    }
-
-    public void setNonExplosion()
-    {
-        explosion.SetBool("Dead", false);
+        explosion.SetTrigger("Dead");
     }
 }
