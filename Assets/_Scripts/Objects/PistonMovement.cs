@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PistonMovement : TimeObject
 {
+    public bool interactable = false;
+
+    public pistonType type = pistonType.oneshot;
+
     public float extentDistance = 3f;
     public float extentDuration = 1f;
     public float startOffset = 0f;
@@ -14,6 +18,12 @@ public class PistonMovement : TimeObject
     public Transform target;
 
     public Transform toMove;
+
+    public enum pistonType
+    {
+        oneshot,
+        pingpong
+    }
 
     private bool reversing;
     private float offset;
@@ -29,22 +39,36 @@ public class PistonMovement : TimeObject
 
     public override void NormalBehavior()
     {
-        //Max distance of extent
-        float dist = !reversing ? (toMove.position - transform.position).magnitude : (target.position - toMove.position).magnitude; 
-        //Direction of velocity
-        float dir = reversing ? -1 : 1;
+        if (interactable) return;
 
-        //Move shaft
-        if (dist < extentDistance) 
+        switch(type)
         {
-            rb.MovePosition(rb.position + (Vector2)transform.right * extentDistance * dir * Time.fixedDeltaTime);
-        }
-        //Stop shaft and switch direction
-        else if (dist >= extentDistance) 
-        {
-            rb.position = reversing ? transform.position : target.position;
+            case pistonType.oneshot:
+                if ((toMove.position - transform.position).magnitude < extentDistance)
+                {
+                    rb.MovePosition(rb.position + (Vector2)transform.right * extentDistance * Time.fixedDeltaTime);
+                }
+                break;
+            case pistonType.pingpong:
 
-            reversing = !reversing;
+                //Max distance of extent
+                float dist = !reversing ? (toMove.position - transform.position).magnitude : (target.position - toMove.position).magnitude;
+                //Direction of velocity
+                float dir = reversing ? -1 : 1;
+
+                //Move shaft
+                if (dist < extentDistance)
+                {
+                    rb.MovePosition(rb.position + (Vector2)transform.right * extentDistance * dir * Time.fixedDeltaTime);
+                }
+                //Stop shaft and switch direction
+                else if (dist >= extentDistance)
+                {
+                    rb.position = reversing ? transform.position : target.position;
+
+                    reversing = !reversing;
+                }
+                break;
         }
 
         //Lock to axis Broken Help pls
@@ -58,22 +82,37 @@ public class PistonMovement : TimeObject
 
     public override void RewindBehavior()
     {
-        //Max distance of extent
-        float dist = !reversing ? (target.position - toMove.position).magnitude : (toMove.position - transform.position).magnitude;
-        //Direction of velocity
-        float dir = reversing ? 1 : -1;
+        if (interactable) return;
 
-        //Move shaft
-        if (dist < extentDistance)
+        switch(type)
         {
-            rb.MovePosition(rb.position + (Vector2)transform.right * extentDistance * dir * Time.fixedDeltaTime);
-        }
-        //Stop shaft and switch direction
-        else if (dist >= extentDistance)
-        {
-            rb.position = reversing ? target.position : transform.position;
+            case pistonType.oneshot:
+                if ((target.position - toMove.position).magnitude < extentDistance)
+                {
+                    rb.MovePosition(rb.position + (Vector2)transform.right * -extentDistance * Time.fixedDeltaTime);
+                }
+                break;
+            case pistonType.pingpong:
 
-            reversing = !reversing;
+                //Max distance of extent
+                float dist = !reversing ? (target.position - toMove.position).magnitude : (toMove.position - transform.position).magnitude;
+                //Direction of velocity
+                float dir = reversing ? 1 : -1;
+
+                //Move shaft
+                if (dist < extentDistance)
+                {
+                    rb.MovePosition(rb.position + (Vector2)transform.right * extentDistance * dir * Time.fixedDeltaTime);
+                }
+                //Stop shaft and switch direction
+                else if (dist >= extentDistance)
+                {
+                    rb.position = reversing ? target.position : transform.position;
+
+                    reversing = !reversing;
+                }
+                break;
         }
+
     }
 }

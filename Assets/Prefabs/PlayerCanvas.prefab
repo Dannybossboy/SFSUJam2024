@@ -115,8 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e26404761026b345adb831204f05263, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rewindText: {fileID: 0}
-  timeText: {fileID: 0}
+  watchHand: {fileID: 1167948708571935975}
   stopWatch: {fileID: 3215991573861891776}
 --- !u!1 &1658801489026077947
 GameObject:

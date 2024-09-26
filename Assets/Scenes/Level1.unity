@@ -24557,6 +24557,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1167948708571935975, guid: a7426e554ee962a41949eb678b044c7a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1167948708571935975, guid: a7426e554ee962a41949eb678b044c7a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1167948708571935975, guid: a7426e554ee962a41949eb678b044c7a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1167948708571935975, guid: a7426e554ee962a41949eb678b044c7a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4564721255937335455, guid: a7426e554ee962a41949eb678b044c7a, type: 3}
       propertyPath: m_Pivot.x
       value: 0

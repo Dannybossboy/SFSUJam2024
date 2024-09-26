@@ -7,8 +7,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    public TMP_Text rewindText;
-    public TMP_Text timeText;
+    public RectTransform watchHand;
 
     public Animator stopWatch;
 
@@ -40,10 +39,9 @@ public class UIManager : MonoBehaviour
 
     public void SetTime(float time)
     {
-        /*
-        int minutes = Mathf.FloorToInt(time / 60);
         int seconds = Mathf.FloorToInt(time % 60);
-        timeText.text = string.Format("{0:00}: {1:00}", minutes, seconds);
-        */
+
+        watchHand.localRotation = Quaternion.Euler(0,0, -360 * seconds / 60);
+        
     }
 }
