@@ -402,7 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 6733962120066156431}
-  audioClip: {fileID: 8300000, guid: 9a53353a22e17164cbdc02586205417f, type: 3}
+  audioClip: {fileID: 8300000, guid: b0fbdd598cc48fd4fb19015a7803e7cd, type: 3}
 --- !u!1 &6093266340106461123
 GameObject:
   m_ObjectHideFlags: 0

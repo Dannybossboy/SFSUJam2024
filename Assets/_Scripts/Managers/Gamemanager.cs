@@ -58,7 +58,7 @@ public class Gamemanager : MonoBehaviour
         uiManager.SetTime(time);
 
         // Stops reversing time once player reaches the starting time
-        if (time > checkpointTime)
+        if (time >= checkpointTime)
         {
             timeManager.isRewinding = false;
         }

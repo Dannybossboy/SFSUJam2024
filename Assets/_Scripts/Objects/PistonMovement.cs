@@ -5,6 +5,7 @@ using UnityEngine;
 public class PistonMovement : TimeObject
 {
     public bool interactable = false;
+    public bool inversed = false;
 
     public pistonType type = pistonType.oneshot;
 
@@ -27,6 +28,7 @@ public class PistonMovement : TimeObject
 
     private bool reversing;
     private float offset;
+    private bool callingInverse;
     public override void Init()
     {
         rb = toMove.GetComponent<Rigidbody2D>();
@@ -40,6 +42,16 @@ public class PistonMovement : TimeObject
     public override void NormalBehavior()
     {
         if (interactable) return;
+
+        if(inversed && !callingInverse)
+        {
+
+            callingInverse = true;
+            RewindBehavior();
+            return;
+        }
+
+        callingInverse = false;
 
         switch(type)
         {
@@ -87,7 +99,16 @@ public class PistonMovement : TimeObject
     {
         if (interactable) return;
 
-        switch(type)
+        if (inversed && !callingInverse)
+        {
+            callingInverse = true;
+            NormalBehavior();
+            return;
+        }
+
+        callingInverse = false;
+
+        switch (type)
         {
             case pistonType.oneshot:
                 if ((target.position - toMove.position).magnitude < extentDistance)
