@@ -6,16 +6,17 @@ public class Gamemanager : MonoBehaviour
 {
     public static Gamemanager instance;
 
-    private float time;
-    private static float checkpointTime = 61;
+    public float time;
+    private static float checkpointTime = 62;
     private TimeManager timeManager;
     private UIManager uiManager;
     private void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
             Destroy(gameObject);
-        } else
+        }
+        else
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -31,26 +32,26 @@ public class Gamemanager : MonoBehaviour
 
 
     private void Update()
-    {   
+    {
         // Play State
-        if(time > 0)
+        if (time > 0)
         {
             // Adds or subtracts time dependin on whether the plaeyr is reversing
             if (timeManager.isRewinding)
             {
                 time += Time.deltaTime;
-            } 
+            }
             else
             {
                 time -= Time.deltaTime;
             }
-            
+
         }
         // Game Over State
         else if (time < 0)
         {
             time = 0;
-            
+
         }
 
         // Adjust clock to the current time
@@ -59,8 +60,14 @@ public class Gamemanager : MonoBehaviour
         // Stops reversing time once player reaches the starting time
         if (time > checkpointTime)
         {
-            //timeManager.isRewinding = false;
+            timeManager.isRewinding = false;
         }
 
     }
+
+    public void setCheckpointTime()
+    {
+        checkpointTime = time + 2;
+    }
+
 }
