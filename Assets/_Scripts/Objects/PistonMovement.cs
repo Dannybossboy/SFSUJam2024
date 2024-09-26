@@ -47,6 +47,9 @@ public class PistonMovement : TimeObject
                 if ((toMove.position - transform.position).magnitude < extentDistance)
                 {
                     rb.MovePosition(rb.position + (Vector2)transform.right * extentDistance * Time.fixedDeltaTime);
+                } else if((toMove.position - transform.position).magnitude >= extentDistance)
+                {
+                    toMove.position = target.position;
                 }
                 break;
             case pistonType.pingpong:
@@ -90,6 +93,9 @@ public class PistonMovement : TimeObject
                 if ((target.position - toMove.position).magnitude < extentDistance)
                 {
                     rb.MovePosition(rb.position + (Vector2)transform.right * -extentDistance * Time.fixedDeltaTime);
+                } else if ((target.position - toMove.position).magnitude >= extentDistance)
+                {
+                    toMove.position = transform.position;
                 }
                 break;
             case pistonType.pingpong:

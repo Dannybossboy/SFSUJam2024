@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
     {
         int seconds = Mathf.FloorToInt(time % 60);
 
-        watchHand.localRotation = Quaternion.Euler(0,0, -360 * seconds / 60);
+        watchHand.localRotation = Quaternion.Euler(0,0, 360 * seconds / 60);
         
     }
 }
