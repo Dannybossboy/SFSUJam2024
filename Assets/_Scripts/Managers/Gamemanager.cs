@@ -7,7 +7,7 @@ public class Gamemanager : MonoBehaviour
     public static Gamemanager instance;
 
     private float time;
-    private float checkpointTime = 61;
+    private static float checkpointTime = 61;
     private TimeManager timeManager;
     private UIManager uiManager;
     private void Awake()
