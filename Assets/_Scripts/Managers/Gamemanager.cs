@@ -52,6 +52,7 @@ public class Gamemanager : MonoBehaviour
         else if (time < 0)
         {
             time = 0;
+            StartCoroutine(death());
 
         }
 
@@ -68,13 +69,16 @@ public class Gamemanager : MonoBehaviour
 
     public void setCheckpointTime()
     {
-        checkpointTime = time + 1;
+        checkpointTime = time;
     }
 
     private IEnumerator death()
     {
+        
+        uiManager.setExplosion();
+        yield return new WaitForSeconds(1);
+        uiManager.setNonExplosion();
         time = checkpointTime;
-        yield return new WaitForSeconds(2);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

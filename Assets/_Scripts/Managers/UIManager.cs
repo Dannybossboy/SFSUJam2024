@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
 
     public Animator stopWatch;
 
+    public Animator explosion;
+
     private void Awake()
     {
         if(Instance != null)
@@ -51,5 +53,15 @@ public class UIManager : MonoBehaviour
 
         watchHand.localRotation = Quaternion.Euler(0,0, 360 * seconds / 60);
         
+    }
+
+    public void setExplosion()
+    {
+        explosion.SetBool("Dead",true);
+    }
+
+    public void setNonExplosion()
+    {
+        explosion.SetBool("Dead", false);
     }
 }
