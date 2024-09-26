@@ -18,7 +18,15 @@ public class TimeManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if(instance != null)
+        {
+            Destroy(gameObject);
+        } else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
     }
     private void Start()
     {
