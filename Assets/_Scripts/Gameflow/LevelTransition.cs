@@ -21,6 +21,7 @@ public class LevelTransition : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             StartCoroutine(Move(cam.transform.position, levelCamPos.position, 1f));
+            gamemanager.setCheckpointTime();
             loadNextLevel();
         }
     }
@@ -41,6 +42,7 @@ public class LevelTransition : MonoBehaviour
 
     private void loadNextLevel()
     {
+
         switch(SceneManager.GetActiveScene().name)
         {
             case "Level1":

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Gamemanager : MonoBehaviour
 {
@@ -67,7 +68,14 @@ public class Gamemanager : MonoBehaviour
 
     public void setCheckpointTime()
     {
-        checkpointTime = time + 2;
+        checkpointTime = time + 1;
+    }
+
+    private IEnumerator death()
+    {
+        time = checkpointTime;
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 }
