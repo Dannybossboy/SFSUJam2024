@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -24,6 +25,19 @@ public class UIManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
+    }
+
+    private void Start()
+    {
+        SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
+    }
+
+    private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
+    {
+        if (arg1.name == "End")
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
