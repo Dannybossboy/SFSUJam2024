@@ -82,7 +82,6 @@ public class PistonMovement : TimeObject
 
     public override void NormalBehavior()
     {
-        Debug.Log("Normal pills");
         if (inversed && !callingInverse)
         {
             callingInverse = true;
@@ -138,7 +137,6 @@ public class PistonMovement : TimeObject
 
     public override void RewindBehavior()
     {
-        Debug.Log("Reverse");
 
         if (inversed && !callingInverse)
         {

@@ -26,9 +26,18 @@ public class Gamemanager : MonoBehaviour
     }
     private void Start()
     {
+        SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
         timeManager = TimeManager.instance;
         uiManager = UIManager.Instance;
         time = checkpointTime;
+    }
+
+    private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
+    {
+        if(arg1.name == "End")
+        {
+            Destroy(gameObject);
+        }
     }
 
 

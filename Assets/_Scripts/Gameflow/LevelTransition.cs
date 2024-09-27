@@ -49,7 +49,10 @@ public class LevelTransition : MonoBehaviour
                 SceneManager.LoadScene("Level2");
                 break;
             case "Level2":
-                SceneManager.LoadScene("Level1");
+                SceneManager.LoadScene("Level3");
+                break;
+            case "Level3":
+                SceneManager.LoadScene("End");
                 break;
         }
     }

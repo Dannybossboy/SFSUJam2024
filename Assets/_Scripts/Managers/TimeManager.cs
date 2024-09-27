@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TimeManager : MonoBehaviour
 {
@@ -30,10 +31,21 @@ public class TimeManager : MonoBehaviour
     }
     private void Start()
     {
+        SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
+
+
         gamemanager = Gamemanager.instance;
 
         musicSource.clip = normalMusic;
         musicSource.Play();
+    }
+
+    private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
+    {
+        if (arg1.name == "End")
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Update()
