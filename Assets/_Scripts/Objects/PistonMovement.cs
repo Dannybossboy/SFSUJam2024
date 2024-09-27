@@ -20,6 +20,10 @@ public class PistonMovement : TimeObject
 
     public Transform toMove;
 
+    public AudioSource source;
+    public AudioClip forward;
+    public AudioClip backward;
+
     public enum pistonType
     {
         oneshot,
@@ -29,7 +33,8 @@ public class PistonMovement : TimeObject
     private bool reversing;
     private float offset;
     private bool callingInverse;
-    public bool interacted;
+    private bool interacted;
+    bool playedSound;
     public override void Init()
     {
         rb = toMove.GetComponent<Rigidbody2D>();
@@ -89,6 +94,8 @@ public class PistonMovement : TimeObject
             return;
         }
 
+
+
         callingInverse = false;
 
         switch(type)
@@ -98,10 +105,17 @@ public class PistonMovement : TimeObject
                 {
                     rb.bodyType = RigidbodyType2D.Dynamic;
                     rb.MovePosition(rb.position + (Vector2)transform.right * extentDistance * Time.fixedDeltaTime);
+
+                    if (!playedSound)
+                    {
+                        playedSound = true;
+                        source.PlayOneShot(forward);
+                    }
                 } else if((toMove.position - transform.position).magnitude >= extentDistance)
                 {
                     rb.bodyType = RigidbodyType2D.Kinematic;
                     toMove.position = target.position;
+                    playedSound = false;
                 }
                 break;
             case pistonType.pingpong:
@@ -145,6 +159,8 @@ public class PistonMovement : TimeObject
             return;
         }
 
+
+
         callingInverse = false;
 
         switch (type)
@@ -153,9 +169,16 @@ public class PistonMovement : TimeObject
                 if ((target.position - toMove.position).magnitude < extentDistance)
                 {
                     rb.MovePosition(rb.position + (Vector2)transform.right * -extentDistance * Time.fixedDeltaTime);
+
+                    if (!playedSound)
+                    {
+                        playedSound = true;
+                        source.PlayOneShot(backward);
+                    }
                 } else if ((target.position - toMove.position).magnitude >= extentDistance)
                 {
                     toMove.position = transform.position;
+                    playedSound = false;
                 }
                 break;
             case pistonType.pingpong:

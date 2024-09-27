@@ -59,7 +59,7 @@ public class Gamemanager : MonoBehaviour
 
         }
         // Game Over State
-        else if (time <= 0)
+        else if (time < 0)
         {
             time = 0;
             StartCoroutine(death());

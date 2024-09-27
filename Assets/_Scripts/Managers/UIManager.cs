@@ -48,16 +48,6 @@ public class UIManager : MonoBehaviour
 
     public void toggleRewindUI(bool rewinding)
     {
-        /*
-        if(rewinding)
-        {
-            rewindText.text = "<<";
-        } else
-        {
-            rewindText.text = ">>";
-        }
-        */
-
         stopWatch.SetTrigger("Click");
     }
 
