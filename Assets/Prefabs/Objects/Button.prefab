@@ -139,6 +139,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   button: {fileID: 3746656824361166073}
+  buttonSprite: {fileID: 9055445757838430647}
+  red: {fileID: 21300000, guid: b4ae5278b2c47eb44903b60db2c43bfa, type: 3}
+  green: {fileID: 21300000, guid: 4695f2abaf1bc8f48819fb55dcbe6329, type: 3}
   source: {fileID: 4110744496717768522}
   press: {fileID: 8300000, guid: 9a53353a22e17164cbdc02586205417f, type: 3}
   release: {fileID: 8300000, guid: 14a9b32211ba7aa41b3bca6c3cb64e25, type: 3}
@@ -208,9 +211,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 20
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -243,7 +246,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -357,7 +360,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b4ae5278b2c47eb44903b60db2c43bfa, type: 3}
-  m_Color: {r: 0.735849, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -29,6 +29,7 @@ public class PistonMovement : TimeObject
     private bool reversing;
     private float offset;
     private bool callingInverse;
+    public bool interacted;
     public override void Init()
     {
         rb = toMove.GetComponent<Rigidbody2D>();
@@ -43,17 +44,47 @@ public class PistonMovement : TimeObject
                 break;
         }
 
-        toMove.position = Vector3.Lerp(transform.position, transform.position + new Vector3(extentDistance, 0, 0), startOffset);
+        toMove.position = Vector3.Lerp(transform.position, transform.position + transform.right * extentDistance, startOffset);
 
+    }
+
+    public override void FixedUpdate()
+    {
+        if (interactable)
+        {
+            if (interacted)
+            {
+                if(inversed)
+                {
+                    RewindBehavior();
+                } else
+                {
+                    NormalBehavior();
+                }
+
+            }
+            else
+            {
+                if(inversed)
+                {
+                    NormalBehavior();
+                } else
+                {
+                    RewindBehavior();
+                }
+
+            }
+        } else
+        {
+            base.FixedUpdate();
+        }
     }
 
     public override void NormalBehavior()
     {
-        if (interactable) return;
-
-        if(inversed && !callingInverse)
+        Debug.Log("Normal pills");
+        if (inversed && !callingInverse)
         {
-
             callingInverse = true;
             RewindBehavior();
             return;
@@ -107,7 +138,7 @@ public class PistonMovement : TimeObject
 
     public override void RewindBehavior()
     {
-        if (interactable) return;
+        Debug.Log("Reverse");
 
         if (inversed && !callingInverse)
         {
@@ -151,5 +182,17 @@ public class PistonMovement : TimeObject
                 break;
         }
 
+    }
+
+    public void SetActive(bool active)
+    {
+        if(active)
+        {
+            interacted = true;
+
+        } else
+        {
+            interacted = false;
+        }
     }
 }

@@ -38,10 +38,15 @@ public class MoveablePlatform : MonoBehaviour
     IEnumerator Move(Vector3 start, Vector3 end, float duration)
     {
         float time = 0;
+        float dist = Vector3.Distance(start, end);
+        float offset = Vector3.Distance(start, toMove.position);
+        Debug.Log(offset + " " + dist);
+        offset = offset / dist;
+        Debug.Log(offset);
 
         while(time < duration)
         {
-            toMove.position = Vector3.Lerp(start, end, time / duration);
+            toMove.position = Vector3.Lerp(start, end, (time / duration) + offset);
             time += Time.deltaTime;
             yield return null;
         }
